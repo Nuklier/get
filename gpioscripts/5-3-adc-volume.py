@@ -31,7 +31,7 @@ def adc2():
         val += s
         bin = dectobin(val)
         gpio.output(dac, bin)
-        time.sleep(0.004)
+        time.sleep(0.006)
         if gpio.input(crutch) == 1:
             val -= s
     return val
@@ -46,16 +46,18 @@ def adc():
             
 
 try:
+    led = [0] * 8
     while True:
-        led = [0] * 8
+        
         x = dectobin(adc2())
         
         for i in range(8):
             if x[i] == 1:
                 for j in range(i, 8):
                     x[j] = 1
-        time.sleep(0.01)
+
         gpio.output(leds, x)
+        time.sleep(0.01)
 
 finally:
     gpio.output(dac, 0)
